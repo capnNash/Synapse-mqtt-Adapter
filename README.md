@@ -1,2 +1,2 @@
-# Synapse-mqtt-Adapter
-python scripts to control lights and transfer light data to back-end
+# Clearblade-Synapse-mqtt-Adapter
+A Clearblade mqtt Adapter on synapse lighting system 

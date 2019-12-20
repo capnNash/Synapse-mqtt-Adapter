@@ -1,0 +1,49 @@
+#!/bin/bash
+set -e
+
+### BEGIN INIT INFO
+# Provides:           edge
+# Default-Start:      2 3 4 5
+# Default-Stop:       0 1 6
+# Short-Description:  IoTRight platform local instance
+### END INIT INFO
+
+
+PIDFILE=/var/run/synapse.pid
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+DAEMON=/usr/bin/python
+FLAGS="/home/snap/synapse_adapter.py"
+
+start() {
+    echo "Starting synapse..."
+    start-stop-daemon --start --quiet --oknodo --background --pidfile $PIDFILE --exec /bin/bash -- -c "exec $DAEMON $FLAGS"
+}
+
+stop() {
+    echo "Stopping synapse..."
+    start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE --retry 10
+}
+
+
+case "$1" in
+    start)
+        start
+        ;;
+
+    stop)
+        stop
+        ;;
+
+    restart)
+        stop
+        start
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
